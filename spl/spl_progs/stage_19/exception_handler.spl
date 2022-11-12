@@ -39,8 +39,12 @@ if(EC!=0 || userSP==lastStackPageNum) then
     [PROCESS_TABLE + ([SYSTEM_STATUS_TABLE+1]*16)+ 9] = -1;
 
     print "-------";
-    print "Stack Oveflow";
 	print "ERROR HALTING";
+
+    if(userSP==lastStackPageNum) then
+		print "Stack Oveflow";
+		print EIP;
+	endif;
 	
 	if(EC == 1) then
 		print "INSTRUCTION ILLEGAL";

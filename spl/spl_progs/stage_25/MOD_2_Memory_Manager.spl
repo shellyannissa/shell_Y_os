@@ -34,7 +34,7 @@ if(functionNum == GET_FREE_PAGE) then
     endwhile; 
 
     if(count >= MAX_MEM_PAGE)then
-        page =-1;
+        count =-1;
     endif;
     R0=count;
 

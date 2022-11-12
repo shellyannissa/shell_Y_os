@@ -41,7 +41,7 @@ echo "INT 16 Compiled"
 echo "INT 17 Login Compiled"
 ./spl ./spl_progs/stage_24/MOD_0_Resource_Manager.spl
 echo "Module 0 Resource Manager Compiled"
-./spl ./spl_progs/stage_25/MOD_1_Process_Manager.spl
+./spl ./spl_progs/stage_27/MOD_1_Process_Manager.spl
 echo "Module 1 Process Manager Compiled"
 ./spl ./spl_progs/stage_27/MOD_2_Memory_Manager.spl
 echo "Module 2 Memory Manager Compiled"

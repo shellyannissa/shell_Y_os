@@ -1,6 +1,6 @@
 load --os ../spl/spl_progs/stage_27/OS_Startup.xsm
 load --module 0 ../spl/spl_progs/stage_24/MOD_0_Resource_Manager.xsm
-load --module 1 ../spl/spl_progs/stage_25/MOD_1_Process_Manager.xsm
+load --module 1 ../spl/spl_progs/stage_27/MOD_1_Process_Manager.xsm
 load --module 2 ../spl/spl_progs/stage_27/MOD_2_Memory_Manager.xsm
 load --module 3 ../spl/spl_progs/stage_25/MOD_3_File_Manager.xsm
 load --module 4 ../spl/spl_progs/stage_23/MOD_4_Device_Manager.xsm

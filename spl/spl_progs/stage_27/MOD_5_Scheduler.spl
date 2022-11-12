@@ -1,4 +1,4 @@
-// Pushing BP of current process
+// Pushing BP of current process because expl program does not save the BP while the schduler is called from the timer
 multipush(BP);
 // 2 Obtain the PID of currently executing process from System Status Table.
 
@@ -15,8 +15,7 @@ processTableEntryAddress = PROCESS_TABLE + [SYSTEM_STATUS_TABLE+1] * 16;
 alias iter R4;
 alias newProcessTableEntryAddress R3;
 alias newPID R2;
-alias pagingProcessPID R5;
-pagingProcessPID = 15;
+
 
 newPID = -1;
 
@@ -24,7 +23,7 @@ newPID = -1;
 if( [SYSTEM_STATUS_TABLE + 5] != 0 ) then
 
     // If the paging process is not blocked  ( the paging process is executing a disk operation )
-    if([PROCESS_TABLE + 16*pagingProcessPID +4] != WAIT_DISK) then
+    if([PROCESS_TABLE + 16*SWAPPER_DAEMON +4] != WAIT_DISK) then
         // Choose the Swapper Daemon to be scheduled.
         newPID = SWAPPER_DAEMON;
     else   

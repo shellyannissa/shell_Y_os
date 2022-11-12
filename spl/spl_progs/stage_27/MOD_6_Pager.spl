@@ -111,10 +111,13 @@ if(functionNumber == SWAP_OUT) then
     // Temporary registers in use
     alias pageAddress R8;
     // stack and heap
+    // Get two free swap block by calling the get_swap_block() function in the Memory Manager module.
+    // Use the disk_store() function in the Device Manager module to write the two heap and stack pages to the disk blocks found above.
     while(iter < 20) do
         pageAddress = ptbr + iter;
         
         // For each heap page that is not shared and is valid (  Shared heap pages are not swapped out. )
+        // Note that heap pages can be shared, but stack is not shared.
         if([pageAddress] != -1 && [MEMORY_FREE_LIST+[pageAddress]] == 1) then // if heap page number is not equal to -1 then
 
             // Get a free swap block by calling the get_swap_block() function in the Memory Manager module.
@@ -133,7 +136,7 @@ if(functionNumber == SWAP_OUT) then
 
             multipush(R8); //pageAddress
 
-            //  Use the disk_store() function in the Device Manager module to write the heap page to the block found above
+            //  Use the disk_store() function in the Device Manager module to write the heap/stack page to the block found above
             // DISK_STORE arguements PID, Page Number, Block Number	
            
             R1 = DISK_STORE;
@@ -155,10 +158,10 @@ if(functionNumber == SWAP_OUT) then
             multipop(R0);
             multipop(R1,R2,R3,R4,R5,R6,R7,R8);
             
-            // Store the disk block number in the Disk Map Table entry of the process curresponding to the heap page.
+            // Store the disk block number in the Disk Map Table entry of the process curresponding to the heap/stack page.
             [diskMapEntryAddress + iter/2] = swapBlockNumber;
 
-            // Invalidate the Page table entry corresponding to the heap pages.
+            // Invalidate the Page table entry corresponding to the heap/stack pages.
             [pageAddress] = -1;
             [pageAddress + 1] = "0000";
 
@@ -169,9 +172,6 @@ if(functionNumber == SWAP_OUT) then
         endif;
     endwhile;
 
-    // Get two free swap block by calling the get_swap_block() function in the Memory Manager module.
-    // Use the disk_store() function in the Device Manager module to write the two stack pages to the disk blocks found above.
-   
 
     // Set the SWAP_FLAG field in the process table entry of the process to 1.
     [processTableEntryAddress + 6] = 1;
@@ -182,6 +182,10 @@ if(functionNumber == SWAP_OUT) then
     
 
     // The scheduler can now resume normal scheduling
+
+
+    // PAGING_STATUS to 0
+    [SYSTEM_STATUS_TABLE + 5] = 0;
   
 endif;
 
@@ -277,7 +281,7 @@ if(functionNumber == SWAP_IN) then
             
             alias heapPage R9;
             heapPage = ptbr+2*iter;
-            // Set the Page table entry correpsonding to the page. Reference bit is set to 0, valid bit and write bit are set to 1.
+            // Set the Page table entry corresponding to the page. Reference bit is set to 0, valid bit and write bit are set to 1.
             [heapPage] = swapInMemoryPage;
             [heapPage+1] = "0110";
 
@@ -308,9 +312,10 @@ if(functionNumber == SWAP_IN) then
     // The scheduler can now resume normal scheduling 
 
 
+    // PAGING_STATUS to 0
+    [SYSTEM_STATUS_TABLE + 5] = 0;
+
 endif;
 
-// PAGING_STATUS to 0
-[SYSTEM_STATUS_TABLE + 5] = 0;
 
 return;
