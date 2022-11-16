@@ -102,7 +102,7 @@ if(systemCallNum == 1) then //  Create
     [inodeTableEntryAddress+4] = permission;
 
     // In the Root file entry corresponding to the Inode Table index, 
-    alias rootFileEntryAddress R6;
+    alias rootFileEntryAddress R9;
     rootFileEntryAddress = ROOT_FILE + freeInodeIndex*8;
     
 
@@ -183,6 +183,7 @@ if(systemCallNum == 4) then // Delete
     R1 = ACQUIRE_INODE;
     R2 = inodeIndexOfFile;
     R3 = [SYSTEM_STATUS_TABLE+1];
+    call RESOURCE_MANAGER;
     multipop(R1,R2,R3,R4,R5,R6,R7);
 
     
@@ -220,7 +221,7 @@ if(systemCallNum == 4) then // Delete
     alias bufferTableEntryAddress R9;
     iter = 8;
     while(iter < 12) do
-        diskBlockNumber = [INODE_TABLE + iter* 16 + iter];
+        diskBlockNumber = [INODE_TABLE + inodeIndexOfFile* 16 + iter];
         if(diskBlockNumber != -1) then // if Disk block is alloted
 
             // When a process reads/writes into a file, the relevant disk block is first brought into a memory buffer by the OS and the read/write operation is performed on the buffer. The OS reserves MAX_BUFFER number of memory pages as buffers. The buffer table is a data structure that stores the information regarding the disk block stored in each buffer. The present version of eXpOS sets MAX_BUFFER = 4. Each buffer is identified by its index in the buffer table.
