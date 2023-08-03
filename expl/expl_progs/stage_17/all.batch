@@ -1,4 +1,0 @@
-load --init ../expl/expl_progs/stage_17/openAndExec.xsm
-load --library ../expl/library.lib
-load --idle ../expl/expl_progs/stage_13/idle.xsm
-load --exec ../expl/expl_progs/stage_17/odds.xsm

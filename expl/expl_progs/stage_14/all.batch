@@ -1,7 +1,0 @@
-load --idle ../expl/expl_progs/stage_13/idle.xsm
-load --init ../expl/expl_progs/stage_13/odd_stage_13.xsm
-rm evens.xsm
-rm primes.xsm
-load --exec ../expl/expl_progs/stage_13/evens.xsm
-load --exec ../expl/expl_progs/stage_14/primes.xsm
-dump --inodeusertable

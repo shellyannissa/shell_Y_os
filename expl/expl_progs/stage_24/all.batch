@@ -1,9 +1,0 @@
-load --init ../expl/expl_progs/stage_21/shell_v2.xsm
-load --library ../expl/library.lib
-load --idle ../expl/expl_progs/stage_13/idle.xsm
-rm readFile.xsm
-load --exec ../expl/expl_progs/stage_24/readFile.xsm
-rm test_5.xsm
-load --exec ../expl/expl_progs/stage_24/test_5.xsm
-rm numbers.dat
-load --data ../expl/expl_progs/stage_24/data/numbers.dat
