@@ -1,5 +1,0 @@
-MOV R16, "Exception! Halting.."
-PORT P1, R16
-OUT
-HALT
-HALT

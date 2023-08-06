@@ -1,7 +1,0 @@
-load --os ../spl/spl_progs/stage_15/os_startup_modified_stage_15.xsm
-load --module 7 ../spl/spl_progs/stage_15/boot_module_s15.xsm
-load --int=timer ../spl/spl_progs/stage_15/timer_stage_15.xsm
-load --module 5 ../spl/spl_progs/stage_15/scheduler_stage_15.xsm
-load --module 0 ../spl/spl_progs/stage_15/mod_0_resource_manager.xsm
-load --module 4 ../spl/spl_progs/stage_15/module_4_device_manager.xsm
-load --int=7 ../spl/spl_progs/stage_15/int7.xsm

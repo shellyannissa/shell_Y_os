@@ -1,4 +1,0 @@
-load --os ../spl/spl_progs/stage_13/os_startup_modified_stage_13.xsm
-load --module 7 ../spl/spl_progs/stage_14/boot_module_s14.xsm
-load --int=timer ../spl/spl_progs/stage_13/timer_stage_13.xsm
-load --module 5 ../spl/spl_progs/stage_13/scheduler_stage_13.xsm
