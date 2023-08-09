@@ -1,11 +1,11 @@
 
-// Load the INIT program from the disk to the memory.
+// Loading the INIT program from the disk to the memory.
 // In Disk 65-66 , in memory 7 -8
 loadi(65,7);
 loadi(66,8);
 
 
-//Load the INT10 module from the disk to the memory.
+//Loading the INT10 module from the disk to the memory.
 // 35 - 36	Interrupt 10 Routine: Exit	2 in Disk
 // 22 - 23	Interrupt 10 Routine: Exit	11264 - 12287	1024 in Memory
 
