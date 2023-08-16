@@ -1,9 +1,0 @@
-alias counter R0;
-alias sqr R1;
-
-counter = 1;
-while (counter <= 20) do
-    sqr = counter * counter;
-    print sqr;
-    counter = counter + 1;
-endwhile;
