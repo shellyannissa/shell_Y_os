@@ -12,7 +12,6 @@ userSP = SP;
 //SP = [user area page address]
 SP = [PROCESS_TABLE + ([SYSTEM_STATUS_TABLE + 1] * 16) + 11] * 512 -1;
 
-PTBR = [PROCESS_TABLE + ([SYSTEM_STATUS_TABLE + 1] * 16) + 14];
 
 alias physicalPageNum R1;
 alias offset R2;
@@ -43,7 +42,5 @@ SP = userSP;
 [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1] * 16 + 9] = 0;
 
 ireturn;
-
-
 
 
