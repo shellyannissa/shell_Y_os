@@ -49,8 +49,13 @@ PTLR = 10;
 SP = 8 * 512;
 [76 * 512] = [65 * 512 + 1];
 
+//physical page number 80 for user area page 
 [PROCESS_TABLE + 11] = 80;
+
+//pid of process
 [PROCESS_TABLE + 1] = 0;
+
+//current exec process
 [SYSTEM_STATUS_TABLE + 1] = 0;
 
 
