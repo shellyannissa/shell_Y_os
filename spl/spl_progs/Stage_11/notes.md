@@ -32,10 +32,15 @@ t = alloc();
 - returns address in heap if allocation success, else -1
 - by default 8 words assigned
 
-retval = free(t)
+retval = free(t)// raises syntatic error with compiler ,
+free(t) //to be used instead
 
 - 0 success, -1 failure
 
 # Loading library
 
-setting page table entries for first two logical pages as 63, 64, for linking the library
+- library loaded from 13, 14 to 63, 64
+
+for creating the library in assg3
+check for the SP - 5 th entry is write
+before invoking the int 7 create another stack of same top 5 values expect for the sys call number which has to be replaced with 5
