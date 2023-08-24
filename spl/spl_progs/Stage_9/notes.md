@@ -21,8 +21,8 @@ starts at address 56
 # System Status Table
 
 info about no of free pages, processes blocked, processes swapped, pid of process to be scheduled next
-size 8 words , 2 is unused
-maintained by kernel
+size 8 words , 2 is unused.
+maintained by kernel.
 present at page 57 of memory
 
 - CURRENT_USER_ID
