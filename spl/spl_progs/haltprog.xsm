@@ -1,6 +1,2 @@
-MOV R0, "exception"
-MOV R16, R0
-PORT P1, R16
-OUT
 HALT
 HALT

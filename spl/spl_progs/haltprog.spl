@@ -1,3 +1,2 @@
-R0 = "exception";
-print R0;
+
 halt;

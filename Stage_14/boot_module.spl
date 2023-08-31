@@ -23,7 +23,7 @@ loadi(65, 7);
 loadi(66, 8);
 
 //even
-loadi(83, 17);
+loadi(83, 69);
 
 //module 5
 loadi(50, 63);
@@ -64,16 +64,16 @@ PTLR = 10;
 [PROCESS_TABLE + 16 +4 ] = CREATED;
 [76 * 512] = [65 * 512 + 1];
 
-PTBR = PAGE_TABLE_BASE + 30;
+PTBR = PAGE_TABLE_BASE + 40;
 PTLR = 10;
 
 [PTBR + 0] = 63;
 [PTBR + 1] = "0100";
 [PTBR + 2] = 64;
 [PTBR + 3] = "0100";
-[PTBR + 4] = 78;
+[PTBR + 4] = 86;
 [PTBR + 5] = "0110";
-[PTBR + 6] = 79;
+[PTBR + 6] = 87;
 [PTBR + 7] = "0110";
 [PTBR + 8] = 83;
 [PTBR + 9] = "0100";
@@ -85,12 +85,12 @@ PTLR = 10;
 [PTBR + 15] = "0000";
 [PTBR + 16] = 84;
 [PTBR + 17] = "0110";
-[PTBR + 18] = -1;
-[PTBR + 19] = "0000";
+[PTBR + 18] = 85;
+[PTBR + 19] = "0110";
 
 [PROCESS_TABLE + 32 + 1] = 2;
 [PROCESS_TABLE + 32 + 12 ] = 0;
-[PROCESS_TABLE + 32 + 11] = 85;
+[PROCESS_TABLE + 32 + 11] = 88;
 [PROCESS_TABLE + 32 + 13] = 8 * 512;
 [PROCESS_TABLE + 32 + 14] = PTBR;
 [PROCESS_TABLE + 32 + 15] = PTLR;
