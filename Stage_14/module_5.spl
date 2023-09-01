@@ -24,6 +24,8 @@ while(i<16-currentPID) do
 	endif;
 	i = i + 1;
 endwhile;
+
+
 process_table_entry = PROCESS_TABLE + (newPID * 16);
 SP = [process_table_entry + 11]*512 + [process_table_entry + 12];
 PTBR = [process_table_entry + 14];
@@ -41,3 +43,5 @@ endif;
 multipop (BP);
 [process_table_entry + 4] = RUNNING;
 return;
+
+
