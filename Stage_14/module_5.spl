@@ -42,6 +42,10 @@ endif;
 
 multipop (BP);
 [process_table_entry + 4] = RUNNING;
+R8 = "old and new PID";
+R9 = 10 * currentPID +  newPID;
+R10 = "scheduler";
+breakpoint;
 return;
 
 

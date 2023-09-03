@@ -99,5 +99,12 @@ POP BP
 MOV R16, R1
 ADD R16, 4
 MOV [R16], 2
+MOV R8, "old and new PID"
+MOV R16, 10
+MUL R16, R0
+ADD R16, R4
+MOV R9, R16
+MOV R10, "scheduler"
+BRKP
 RET
 HALT

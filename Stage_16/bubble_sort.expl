@@ -1,0 +1,99 @@
+// decl
+//     int A[10];
+// enddecl
+
+// int main(){
+//     decl
+//         int n, temp, i, j;
+//     enddecl
+
+//     begin
+//         temp = exposcall("Read", -1, n);
+
+//         temp = exposcall("Read", -1, A[0]);
+//         temp = exposcall("Read", -1, A[1]);
+//         temp = exposcall("Read", -1, A[2]);
+//         temp = exposcall("Read", -1, A[3]);
+//         temp = exposcall("Read", -1, A[4]);
+
+//         i = 0;
+//         while(i < (n-1))do
+//             j = i + 1;
+//             while( j > 0) do 
+//                 if(A[j] < A[j - 1])then
+//                     temp = A[j];
+//                     A[j] = A[j-1];
+//                     A[j-1] = temp;
+//                 endif;
+//             j = j - 1;
+//             endwhile;
+//         i = i + 1;
+//         endwhile;
+
+//         i = 0;
+//         while(i < n )do
+//             temp = exposcall("Write", -2, A[i]);
+//             i = i + 1;
+//         endwhile;
+//         return 0;
+//     end
+
+// }
+
+
+
+decl
+    int bubbleSort(int n);
+    int swap(int a, int b);
+    int array[20];
+enddecl
+
+int swap(int a, int b) {
+    begin
+        array[a] = array[a] + array[b];
+        array[b] = array[a] - array[b];
+        array[a] = array[a] - array[b];
+        return 0;
+    end
+}
+
+int bubbleSort(int n) {
+    decl
+        int temp, i, j;
+    enddecl
+    begin
+        i = 0;
+        while (i < (n - 1)) do 
+            j = i + 1;
+            while (j > 0) do
+                if (array[j] < array[j - 1]) then
+                    temp = swap(j, j - 1);
+                endif;
+                j = j - 1;
+            endwhile;
+            i = i + 1;
+        endwhile;
+        return 0;
+    end
+}
+
+int main() {
+    decl
+        int temp, i, n;
+    enddecl
+    begin
+        temp = exposcall("Read", -1, n);
+        i = 0;
+        while (i < n) do
+            temp = exposcall("Read", -1, array[i]);
+            i = i + 1;
+        endwhile;
+        temp = bubbleSort(n);
+        i = 0;
+        while (i < n) do
+            temp = exposcall("Write", -2, array[i]);
+            i = i + 1;
+        endwhile;
+        return 0;
+    end
+}

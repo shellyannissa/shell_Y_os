@@ -2,6 +2,8 @@ alias functionNum R1;
 alias currentPID R2;
 alias returnVal R0;
 
+
+
 if(functionNum == 8) then
     while([TERMINAL_STATUS_TABLE] == 1) do 
         [PROCESS_TABLE + 16 * currentPID + 4] = WAIT_TERMINAL;
@@ -23,7 +25,7 @@ if(functionNum == 9) then
             alias pid R5;
             pid = [PROCESS_TABLE + 16 * i + 1];
 
-            if(pid >= 0 && pid < 16 && [PROCESS_TABLE + 16 * i + 4] == WAIT_TERMINAL)then
+            if([PROCESS_TABLE + 16 * i + 4] == WAIT_TERMINAL)then
                 [PROCESS_TABLE + 16 * i + 4] = READY;
             endif;
             i = i + 1;
