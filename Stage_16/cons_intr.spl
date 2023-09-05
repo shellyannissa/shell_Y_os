@@ -1,13 +1,9 @@
-alias currentPID R0;
-alias processTableEntry R1;
+[PROCESS_TABLE + 16*[SYSTEM_STATUS_TABLE + 1] + 13] = SP;
 
-currentPID = [SYSTEM_STATUS_TABLE + 1];
-processTableEntry = PROCESS_TABLE + currentPID * 16;
-[processTableEntry + 13] = SP;
-SP = [processTableEntry + 11] * 512 - 1;
+SP = [PROCESS_TABLE + 16*[SYSTEM_STATUS_TABLE + 1] + 11]*512 -1;
 backup;
 
-alias reqPID R3;
+alias reqPID R0;
 reqPID = [TERMINAL_STATUS_TABLE + 1];
 
 processTableEntry = PROCESS_TABLE + reqPID * 16;
@@ -18,9 +14,9 @@ R2 = reqPID;
 
 call MOD_0;
 
+multipop(R0, R1);
 
-
-multipop(R0, R1, R2, R3);
 restore;
-SP = [PROCESS_TABLE + currentPID * 16 + 13];
-ireturn ;
+
+SP = [PROCESS_TABLE + [SYSTEM_STATUS_TABLE + 1]*16 + 13];
+ireturn;
