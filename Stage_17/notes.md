@@ -3,12 +3,12 @@
 - MAX_FILE_NUM = 60 entries
 - 16 words out of which 7 unused
 
-## entry format
+  ## Entry format
 
-- FILE TYPE :DATA, EXEC, ROOT
-- FILE NAME
-- FILE SIZE (MAX_FILE_SIZE = 2048 WORDS, 4 BLOCKS)
-- DATA BLOCK (1 - 4 WORDS)
+  - FILE TYPE :DATA, EXEC, ROOT
+  - FILE NAME
+  - FILE SIZE (MAX_FILE_SIZE = 2048 WORDS, 4 BLOCKS)
+  - DATA BLOCK (1 - 4 WORDS)
 
 - memory copy of inode present in page 59, pointed by INODE_TABLE
 
@@ -23,7 +23,7 @@
 
 # MODULE 2 (memory manager)
 
-![alt text](./MOD_1.png)
+![alt text](./MOD_2.png)
 
 # MODULE 1(process manager)
 
