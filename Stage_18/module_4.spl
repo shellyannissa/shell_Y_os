@@ -2,10 +2,7 @@
 alias functionNum R1;
 alias currentPID R2;
 
-// Disk Store :
-if(functionNum == 1) then
-	R1 = 1;
-endif;
+
 
 // Disk load :
 if(functionNum == 2) then
