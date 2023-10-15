@@ -14,6 +14,9 @@ if(functionNum == 1)then
         multipop(R1);
     endwhile;
 
+    [SYSTEM_STATUS_TABLE + 3] = [SYSTEM_STATUS_TABLE + 3] - 1;
+	[SYSTEM_STATUS_TABLE + 2] = [SYSTEM_STATUS_TABLE + 2] - 1;
+    
     alias memFreeIndex R2;
     //available pages for user processes are from 76 to 127
     memFreeIndex = 76;
