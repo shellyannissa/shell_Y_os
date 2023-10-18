@@ -1,0 +1,202 @@
+//FILE CREATION AND deletion
+alias userSP R1;
+userSP = SP;
+
+alias currPID R2;
+currPID = [SYSTEM_STATUS_TABLE + 1];
+
+alias procTab R3;
+procTab = PROCESS_TABLE + 16 * currPID;
+
+[procTab + 13] = SP;
+SP = [procTab + 11] * 512 -1;
+
+alias syscall R4;
+syscall = [[PTBR + 2*(userSP - 5)/512]*512 + (userSP-5)%512];
+//setting the mode flag
+// [procTab + 9] = syscall;
+
+
+if(syscall == 1) then
+  [procTab + 9] = 1;
+  alias filename R5;
+  alias permission R6;
+
+  filename = [[PTBR + 2*(userSP -4)/512]*512 + (userSP-4)%512];
+  permission = [[PTBR + 2*(userSP -3)/512]*512 + (userSP-3)%512];
+ 
+
+
+  //file already present return 0
+  alias i R7;
+  i=1;
+  while(i<MAX_FILE_NUM) do
+   if([INODE_TABLE + i*16 + 1] == filename) then
+    SP = userSP;
+    [procTab + 9] = 0;
+    [[PTBR + 2*(userSP-1)/512]*512 + (userSP-1)%512] = 0;
+    ireturn;
+   endif; 
+   i = i + 1;
+  endwhile;
+
+
+
+  // no free entry found then return -1
+  i = 1;
+  while(i<MAX_FILE_NUM) do
+    if([INODE_TABLE + i*16 + 1] == -1) then
+      break;
+    endif;
+  i = i + 1;
+  endwhile;
+  if(i == MAX_FILE_NUM) then
+    SP = userSP;
+    [procTab + 9] = 0;
+    [[PTBR + 2*(userSP-1)/512]*512 + (userSP-1)%512] = -1;
+    ireturn;
+  endif;
+
+  alias inodeEntry R8;
+  inodeEntry = INODE_TABLE + 16*i;
+  [inodeEntry + 1] = filename;  //name
+  [inodeEntry + 2] = 0; //file size
+  [inodeEntry + 0] = DATA; //file type
+  [inodeEntry + 8] = -1;  //data blocks
+  [inodeEntry + 9] = -1;
+  [inodeEntry + 10] = -1;
+  [inodeEntry + 11] = -1;
+  [inodeEntry + 3] = [procTab + 3];  //userID
+  [inodeEntry + 4] = permission; 
+
+  alias rootEntry R9;
+  rootEntry = ROOT_FILE + 8*i;
+  [rootEntry + 0] = filename;  //name
+  [rootEntry + 1] = 0; //size
+  [rootEntry + 2] = DATA; //type
+  [rootEntry + 3] = [USER_TABLE + 2*[procTab + 3]];  //username
+  [rootEntry + 4] = permission; 
+
+  SP = userSP;
+  [procTab + 9] = 0;
+  [[PTBR + 2*(userSP-1)/512]*512 + (userSP-1)%512] = 0;
+  ireturn;
+endif;
+
+
+
+if(syscall == 4) then
+  [procTab + 9] = 4;
+  alias filename R5;
+
+  filename = [[PTBR + 2*(userSP -4)/512]*512 + (userSP-4)%512];
+
+  alias i R6;
+  i=1;
+  while(i<MAX_FILE_NUM) do
+   if([INODE_TABLE + i*16 + 1] == filename) then
+     break;  
+   endif;
+   i = i + 1;
+  endwhile;
+
+
+    //file is not present in inode table hence return 0
+  if(i == MAX_FILE_NUM) then
+    SP = userSP;
+    [procTab + 9] = 0;
+    [[PTBR + 2*(userSP-1)/512]*512 + (userSP-1)%512] = 0;
+    ireturn;
+  endif;
+
+  alias inodeIndex R7;
+  alias inodeEntry R8;
+  inodeIndex = i;
+  inodeEntry = INODE_TABLE + 16*i;
+  if([inodeEntry] != DATA) then 
+       R11 = -1;
+       goto ret;
+   endif;
+
+
+    //exclusive permission is set
+   if([inodeEntry + 4] == EXCLUSIVE) then
+    //current user is not the owner and current user is not root
+     if([inodeEntry + 3] != [SYSTEM_STATUS_TABLE + 0] && [SYSTEM_STATUS_TABLE] != 1) then
+       R11 = -1;
+       goto ret;
+     endif;
+   endif;
+
+
+    //acquire inode
+   multipush(R1, R2, R3, R4, R5,  R7, R8);
+   R1 = 4;
+   R3 = currPID;
+   R2 = i;
+   call MOD_0;
+   multipop(R1, R2, R3, R4, R5, R7, R8);
+
+    //if file open count is not -1 then release the inode
+   alias fileStatus R9;
+   fileStatus = FILE_STATUS_TABLE + 4*i;
+   if([fileStatus + 1] != -1) then 
+     multipush(R1, R3);
+     R1 = 5;
+     R3 = currPID;
+     R2 = i;
+     call MOD_0;
+     multipop(R1, R3);
+    R11 = -2;
+    goto ret;
+   endif;
+
+
+   i = 8;
+   while(i<12) do
+    alias blockNum R10;
+    blockNum = [inodeEntry + i];   
+    alias buffEntry R12; 
+    buffEntry = BUFFER_TABLE + (blockNum%MAX_BUFFER)*4;
+    //release block if disk block is loaded into buffer and dirty bit is set
+    if([inodeEntry + i] != -1) then
+        if([buffEntry] == blockNum && [buffEntry + 1] == 1) then
+        [buffEntry + 1] = 0;
+        endif;
+        multipush(R1, R2, R3, R4, R5, R6, R7, R8);
+        R1 = 4;
+        R3 = currPID;
+        R2 = blockNum;
+        call MOD_2;
+        multipop(R1, R2, R3, R4, R5, R6, R7, R8);
+    
+    endif;
+    i = i + 1;
+   endwhile;
+
+   i = 0;
+   while(i<16) do
+     if(i<5) then
+       [ROOT_FILE + inodeIndex*8 + i] = -1;
+     endif;
+     [inodeEntry + i] = -1;
+   i = i + 1;
+   endwhile;
+  
+
+  //release inode
+   multipush(R1, R3);
+   R1 = 5;
+   R2 = currPID;
+   call MOD_0;
+   multipop(R1, R3);
+   
+  R11 = 0;
+  goto ret;
+endif;
+
+ret:
+  SP = userSP;
+  [procTab + 9] = 0;
+  [[PTBR + 2*(userSP-1)/512]*512 + (userSP-1)%512] = R11;
+  ireturn;
