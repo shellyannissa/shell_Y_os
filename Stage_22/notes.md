@@ -23,7 +23,7 @@
 
 - finds free entry in per process resource table
 - index of semaphore table ret by acquire semaphore stored in per proc res table
-- index in pre proc res table returned as semaphore descriptor (semid)
+- index in pre proc res table returned as semaphore descriptor
 - returns -1 if process has reached its limit of resources
 - returns -2 if semaphores has reached its maximum
 

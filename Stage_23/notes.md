@@ -35,5 +35,23 @@
 - -1 file descriptor invalid
 - -2 file pointer has reached the end of file
 
+## open file table
+
+- entries of each instance of a file
+- 4 words
+- inode index
+- open instance count( number of processes sharing the file instance)
+- lseek
+- 1 unused
+- max entries , MAX_OPENFILE_NUM = 32
+
+## file(inode) status table
+
+- MAX_FILE_NUM = 60 entries
+- 4 words
+- locking pid
+- file open count (number of open instances of the file)
+- 2 unused
+
 inorder to run
 create files of both permissions perm1 and perm0 and try deletion

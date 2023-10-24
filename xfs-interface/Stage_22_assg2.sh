@@ -13,6 +13,7 @@ load --int=10 $HOME/myexpos/Stage_20/int_10.xsm
 load --int=11 $HOME/myexpos/Stage_21/int_11.xsm
 load --int=13 $HOME/myexpos/Stage_22/int_13.xsm
 load --int=14 $HOME/myexpos/Stage_22/int_14.xsm
+load --int=15 $HOME/myexpos/Stage_21/int_15.xsm
 load --int=disk $HOME/myexpos/Stage_18/int_2.xsm
 load --module 0 $HOME/myexpos/Stage_22/module_0.xsm
 load --module 1 $HOME/myexpos/Stage_22/module_1.xsm
