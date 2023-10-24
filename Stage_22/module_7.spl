@@ -181,5 +181,14 @@ endwhile;
 [SYSTEM_STATUS_TABLE + 2] = 45;
 [SYSTEM_STATUS_TABLE + 3] = 0;
 
+//number of context switches initialised to 0
+[CONTEXT_SWITCH_COUNT] = 0;
+
+//number of memory usage count initialised to 128 - mem_free_count
+[MAX_MEM_USAGE_COUNT] = 128 - [SYSTEM_STATUS_TABLE + 2];
+
+//number of disk accesses initialised to zero
+[DISK_ACCESS_COUNT] = 0;
+
 return;
   

@@ -11,6 +11,7 @@ if(functionNum == 3) then
 	endwhile;
 	[DISK_STATUS_TABLE + 0] = 1;
 	[DISK_STATUS_TABLE + 4] = currentPID;
+	[DISK_ACCESS_COUNT] = [DISK_ACCESS_COUNT] + 1;
 endif;
 
 

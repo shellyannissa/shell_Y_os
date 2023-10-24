@@ -1,0 +1,9 @@
+print "Cntxt Switch";
+print [CONTEXT_SWITCH_COUNT];
+
+print "Max Mem Usage";
+print [MAX_MEM_USAGE_COUNT];
+
+print "Disk Accesses";
+print [DISK_ACCESS_COUNT];
+halt;

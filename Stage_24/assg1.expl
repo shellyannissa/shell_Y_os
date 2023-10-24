@@ -8,7 +8,7 @@ decl
   str fName, data;
 enddecl
 begin
-  temp = exposcall("Write", -2, "Enter file name");
+  temp = exposcall("Write", -2, "File Name:");
   temp = exposcall("Read", -1, fName);
   fileDesc = exposcall("Open", fName);
   if((fileDesc != -1) AND (fileDesc != -2) AND (fileDesc != -3)) then 
