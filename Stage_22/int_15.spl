@@ -4,6 +4,6 @@ print [CONTEXT_SWITCH_COUNT];
 print "Max Mem Usage";
 print [MAX_MEM_USAGE_COUNT];
 
-print "Disk Accesses";
+print "Disk Access";
 print [DISK_ACCESS_COUNT];
 halt;
