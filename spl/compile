@@ -1,7 +1,0 @@
-#!/bin/zsh
-
-for file in `ls $HOME/myexpos/$1/*.spl`
-do
-    `./spl $file`
-done
-

@@ -26,7 +26,15 @@ load --module 5 $HOME/myexpos/Stage_20/module_5.xsm
 load --module 7 $HOME/myexpos/Stage_24/module_7.xsm
 rm ls.xsm
 load --exec $HOME/myexpos/Stage_25/ls.xsm
+rm cat.xsm
+load --exec $HOME/myexpos/Stage_25/cat.xsm
+rm cp.xsm
+load --exec $HOME/myexpos/Stage_25/cp.xsm
 rm assg1.xsm
 load --exec $HOME/myexpos/Stage_25/assg1.xsm
 rm assg2.xsm
 load --exec $HOME/myexpos/Stage_25/assg2.xsm
+rm assg3.xsm
+load --exec $HOME/myexpos/Stage_25/assg3.xsm
+rm assg4.xsm
+load --exec $HOME/myexpos/Stage_25/assg4.xsm

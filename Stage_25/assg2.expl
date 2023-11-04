@@ -1,57 +1,33 @@
-decl
-  int a;
-enddecl
+int main()
+{
+	decl
+		str name,data;
+		int temp,a,fileDesc,perm,num;
+	enddecl
 
-int main(){
-decl
-  int temp, a, fileDesc, i;
-  str word, fileName;
-enddecl
-begin
-
-  temp = exposcall("Write", -2, "Enter file name");
-  temp = exposcall("Read", -1, fileName);
-  fileDesc = exposcall("Open", fileName);
-  if(fileDesc == -1) then
-    temp = exposcall("Write", -2, "File not found");
-  else
-    if(fileDesc == -2) then
-      temp = exposcall("Write", -2, "System max file opened");
-    else
-      if(fileDesc == -3) then
-        temp = exposcall("Write", -2, "Proc max file opened");
-      endif;
-    endif;
-  endif;
-
-
-  if(fileDesc >= 0) then
-    temp = exposcall("Seek", fileDesc, 2048);
-    i = 2000;
-    while(i<=2513) do
-      temp = exposcall("Write", fileDesc, i);
-
-    i = i + 1;
-    endwhile;
-
-    a = exposcall("Seek", fileDesc, 2048);
-    while(a != -2) do
-      a = exposcall("Seek", fileDesc, -1);
-      if(a == -2) then
-        break;
-      endif;
-      temp = exposcall("Read", fileDesc, word);
-      if(temp == -2) then
-       temp = exposcall("Write", -2, "EOF");
-       break;
-      endif;
-      temp = exposcall("Write", -2, word);
-      a = exposcall("Seek", fileDesc, -1);
-    endwhile;
-  endif;
-  temp = exposcall("Close", fileDesc);
-
-
-  return 0;
-end
+	begin
+		temp = exposcall("Write", -2, "Filename");
+		temp = exposcall("Read", -1, name);
+		fileDesc = exposcall("Open",name);
+		
+		a = exposcall("Seek",fileDesc,1101);
+		num = 2000;
+		while(num < 2514) do
+			temp = exposcall("Write",fileDesc,num);
+			num = num + 1;
+		endwhile;
+		
+		a = 0;
+		
+		a = exposcall("Seek",fileDesc,-1);
+		while(a != -2) do
+			temp = exposcall("Read",fileDesc,data);
+			temp = exposcall("Write",-2,data);
+			a = exposcall("Seek",fileDesc,-2);
+		endwhile;
+		
+		temp = exposcall("Close",fileDesc);
+		
+		return 0;
+	end
 }

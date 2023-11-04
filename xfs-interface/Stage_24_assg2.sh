@@ -28,5 +28,7 @@ rm numbers.dat
 load --data $HOME/myexpos/Stage_24/numbers.dat
 rm assg2.xsm
 load --exec $HOME/myexpos/Stage_24/assg2.xsm
+rm child.xsm
+load --exec $HOME/myexpos/Stage_24/child.xsm
 rm sample.dat
 load --data $HOME/myexpos/sample.dat

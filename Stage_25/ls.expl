@@ -1,23 +1,31 @@
-decl
-  int a;
-enddecl
+int main()
+{
+	decl
+		str data;
+		int temp,a,fileDesc,i;
+	enddecl
 
-int main(){
-decl
- int temp, fileDesc;
- str fName;
-enddecl
-begin
- fileDesc = exposcall("Open", "root");
- while(1==1) do
- temp = exposcall("Read", fileDesc, fName);
- if(temp == -2) then
-   break;
- endif;
- temp = exposcall("Write", -2, fName);
- temp = exposcall("Seek", fileDesc, 7);
- endwhile;
+	begin
+		
 
- return 0;
-end
+		fileDesc = exposcall("Open","root");
+		
+
+		i = 0;
+		a = exposcall("Seek",fileDesc,0);
+		a = exposcall("Read",fileDesc,data);
+		while(a != -2) do
+			temp = i%8;
+			if(temp == 0 AND data != "-1" AND data != "0") then
+				temp = exposcall("Write",-2,data);
+			endif;
+			
+			a = exposcall("Read",fileDesc,data);
+			i = i + 1;
+		endwhile;
+		
+		temp = exposcall("Close",fileDesc);
+		
+		return 0;
+	end
 }

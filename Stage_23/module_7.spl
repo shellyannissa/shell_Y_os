@@ -48,7 +48,7 @@ loadi(21, 34);
 
 //loading INT 10
 loadi(22, 35);
-loadi(22, 35);
+loadi(23, 36);
 
 //loading INT 11
 loadi(24, 37);
