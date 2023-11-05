@@ -87,15 +87,15 @@ loadi(45, 58);
 loadi(46, 59);
 loadi(47, 60);
 
-// loading MOD_4
+// loading mod_4 
 loadi(48, 61);
 loadi(49, 62);
 
-//loading MOD_5
+// loading MOD_5
 loadi(50, 63);
 loadi(51, 64);
 
-//loading MOD_6
+// loading MOD_6
 loadi(52, 65);
 loadi(53, 66);
 
@@ -160,12 +160,15 @@ PTLR = 10;
 [PTBR+18] = -1;
 [PTBR+19] = "0000";
 
-[PROCESS_TABLE + 16 + 1] = 1;
-[PROCESS_TABLE + 16 + 11] = 77;
-[PROCESS_TABLE + 16 + 12] = 0;
-[PROCESS_TABLE + 16 + 13] = 8*512;
-[PROCESS_TABLE + 16 + 14] = PTBR;
-[PROCESS_TABLE + 16 + 15] = PTLR;
+alias procTabEntry R7;
+procTabEntry = PROCESS_TABLE + 16;
+
+[procTabEntry + 1] = 1;
+[procTabEntry + 11] = 77;
+[procTabEntry + 12] = 0;
+[procTabEntry + 13] = 8*512;
+[procTabEntry + 14] = PTBR;
+[procTabEntry + 15] = PTLR;
 
 [PROCESS_TABLE + 16 + 4] = CREATED;
 [66*512] = [65*512 + 1];
@@ -185,13 +188,15 @@ i = 0;
 while(i < 32) do 
 	[SEMAPHORE_TABLE + 4 * i] = -1;
 	[SEMAPHORE_TABLE + 4 * i + 1] = 0;
+  [OPEN_FILE_TABLE + 4*i] = -1;
+  [OPEN_FILE_TABLE + 4*i + 1] = 0;
 	i = i + 1;
 endwhile;
 
 
 
 
-// Inititalize File Status Table
+//Inititalize File Status Table
 i=0;
 while(i<MAX_FILE_NUM) do
   [FILE_STATUS_TABLE + 4*i] = -1;
@@ -199,13 +204,13 @@ while(i<MAX_FILE_NUM) do
   i = i + 1;
 endwhile;
 
-// Initialize Open file table
-i=0;
-while(i<MAX_OPENFILE_NUM) do
-  [OPEN_FILE_TABLE + 4*i] = -1;
-  [OPEN_FILE_TABLE + 4*i + 1] = 0;
-i = i + 1;
-endwhile;
+// // Initialize Open file table
+// i=0;
+// while(i<MAX_OPENFILE_NUM) do
+//   [OPEN_FILE_TABLE + 4*i] = -1;
+//   [OPEN_FILE_TABLE + 4*i + 1] = 0;
+// i = i + 1;
+// endwhile;
 
 // Initialize Buffer Table
 i = 0;
@@ -246,6 +251,7 @@ PTLR = 10;
 [PTBR+18] = 79;
 [PTBR+19] = "0110";
 
+
 [PROCESS_TABLE + 33] = 2;
 [PROCESS_TABLE + 43] = 80;
 [PROCESS_TABLE + 44] = 0;
@@ -262,36 +268,32 @@ PTLR = 10;
 [78*512] = [67*512 + 1];
 
 // Initialize disk map table for SHELL
-[DISK_MAP_TABLE + 20 + 2] = -1;
-[DISK_MAP_TABLE + 20 + 3] = -1;
-[DISK_MAP_TABLE + 20 + 4] = 9;
-[DISK_MAP_TABLE + 20 + 5] = 10;
-[DISK_MAP_TABLE + 20 + 6] = -1;
-[DISK_MAP_TABLE + 20 + 7] = -1;
-[DISK_MAP_TABLE + 20 + 8] = -1;
-[DISK_MAP_TABLE + 20 + 9] = -1;
+alias diskMapEntry R8;
+diskMapEntry = DISK_MAP_TABLE + 20;
+[diskMapEntry + 2] = -1;
+[diskMapEntry + 3] = -1;
+[diskMapEntry + 4] = 9;
+[diskMapEntry + 5] = 10;
+[diskMapEntry + 6] = -1;
+[diskMapEntry + 7] = -1;
+[diskMapEntry + 8] = -1;
+[diskMapEntry + 9] = -1;
 
 
-
-
-i=0;
+//tick initialised to 0
+[PROCESS_TABLE  + 0] = 0;
+[PROCESS_TABLE  + 16] = 0;
+i=2;
 while(i<MAX_PROC_NUM) do
-       if(i>2) then
+	[PROCESS_TABLE + i*16 + 0] = 0;
 	[PROCESS_TABLE + i*16 + 4] = TERMINATED;
-       endif;
-
-	   //setting tick value of all processes to 0
-        [PROCESS_TABLE + 16*i] = 0; 
 	i = i+ 1;
 endwhile;
-
 
 [TERMINAL_STATUS_TABLE + 0] = 0;
 [DISK_STATUS_TABLE + 0] = 0;
 [SYSTEM_STATUS_TABLE + 2] = 45;
 [SYSTEM_STATUS_TABLE + 3] = 0;
-[SYSTEM_STATUS_TABLE + 4] = 0;
-[SYSTEM_STATUS_TABLE + 5] = 0;
 
 return;
   
