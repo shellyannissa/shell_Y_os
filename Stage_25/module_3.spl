@@ -107,7 +107,8 @@ if(fnNum == BUFFERED_READ || fnNum == BUFFERED_WRITE) then
   alias offset R3;
   alias word R4;
   alias bufferNum R5;
-  bufferNum = diskBlock%4;
+
+  bufferNum = diskBlock % 4;
 
   multipush(R1, R2, R3, R4, R5);
   R1 = ACQUIRE_BUFFER;
@@ -116,42 +117,46 @@ if(fnNum == BUFFERED_READ || fnNum == BUFFERED_WRITE) then
   call RESOURCE_MANAGER;
   multipop(R1, R2, R3, R4, R5);
 
-  if([BUFFER_TABLE + 4*bufferNum] != diskBlock) then
-    if([BUFFER_TABLE + 4*bufferNum + 1] == 1) then
+
+  if([BUFFER_TABLE + 4 * bufferNum] != diskBlock) then
+    if([BUFFER_TABLE + 4 * bufferNum + 1] == 1) then
+
+      multipush(R1, R2, R3, R4, R5); //disk store
+      R1 = 1;
+      R2 = [SYSTEM_STATUS_TABLE+1];
+      R3 = 71 + bufferNum;
+      R4 = [BUFFER_TABLE + bufferNum*4 + 0];
+      call DEVICE_MANAGER;
+      multipop(R1, R2, R3, R4, R5);
+
+      [BUFFER_TABLE + bufferNum*4 + 1] = 0;
+    endif;
 
     multipush(R1, R2, R3, R4, R5);
-    R1 = DISK_STORE;
-    R4 = [BUFFER_TABLE + 4*bufferNum];
+    R1 = 2;
+    R4 = diskBlock;
     R2 = [SYSTEM_STATUS_TABLE + 1];
     R3 = BUFFER_BASE + bufferNum;
     call DEVICE_MANAGER;
     multipop(R1, R2, R3, R4, R5);
-    [BUFFER_TABLE + 4*bufferNum + 1] = 0;
-    endif;
+    [BUFFER_TABLE + 4*bufferNum] = diskBlock;
 
-  multipush(R1, R2, R3, R4, R5);
-  R1 = DISK_LOAD;
-  R2 = [SYSTEM_STATUS_TABLE + 1];
-  R3 = BUFFER_BASE + bufferNum;
-  R4 = diskBlock;
-  call DEVICE_MANAGER;
-  multipop(R1, R2, R3, R4, R5);
-  [BUFFER_TABLE + 4*bufferNum] = diskBlock;
   endif;
 
   if(fnNum == BUFFERED_READ) then
-  [word] = [BUFFER + bufferNum *512 + offset];
+    [word] = [(71 + bufferNum )*512 + offset];
   endif;
 
   if(fnNum == BUFFERED_WRITE) then
-  [BUFFER + bufferNum*512 + offset] = word;
-  [BUFFER_TABLE + bufferNum*4 + 1] = 1;
+    [(71 + bufferNum)*512 + offset] = word;
+    [BUFFER_TABLE + bufferNum*4 + 1] = 1;
   endif;
-
+  multipush(R1, R2, R3, R4, R5, R6);
   R1 = RELEASE_BUFFER;
   R2 = bufferNum;
   R3 = [SYSTEM_STATUS_TABLE + 1];
   call RESOURCE_MANAGER;
+  multipop(R1, R2, R3, R4, R5, R6);
   return;
  
 endif;

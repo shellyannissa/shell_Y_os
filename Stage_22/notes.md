@@ -9,7 +9,7 @@
 # Semaphore Table
 
 - MAX_SEM_COUNT = 32
-  ![alt text]('./semaphoretable.png')
+  ![alt text](./semaphoretable.png)
 - locking pid set to -1 if not locked
 - process count = 0 for invalid semaphore entry
 
