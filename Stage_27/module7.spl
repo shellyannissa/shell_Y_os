@@ -259,15 +259,15 @@ PTLR = 10;
 
 procTabEntry = PROCESS_TABLE + 16 * 2;
 
-[processTableEntryAddress+2] = 1; // PPID
-[processTableEntryAddress+ 1] = 2;// PID
-[processTableEntryAddress+ 4] = TERMINATED; 
+[procTabEntry +2] = 1; // PPID
+[procTabEntry + 1] = 2;// PID
+[procTabEntry + 4] = TERMINATED; 
 // Allocate memory page 80 for kernel stack of init.
-[processTableEntryAddress+ 11] = 80;
-[processTableEntryAddress+ 12] = 0; // KPTR
-[processTableEntryAddress+ 13] = 8*512; // UPTR
-[processTableEntryAddress+ 14] = PAGE_TABLE_BASE+40;//29716
-[processTableEntryAddress+ 15] = 10; // PTLR
+[procTabEntry + 11] = 80;
+[procTabEntry + 12] = 0; // KPTR
+[procTabEntry + 13] = 8*512; // UPTR
+[procTabEntry + 14] = PAGE_TABLE_BASE+40;//29716
+[procTabEntry + 15] = 10; // PTLR
 
 [78*512] = [67*512 + 1];
 

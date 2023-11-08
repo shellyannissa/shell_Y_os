@@ -30,6 +30,8 @@ rm cat.xsm
 load --exec $HOME/myexpos/Stage_25/cat.xsm
 rm cp.xsm
 load --exec $HOME/myexpos/Stage_25/cp.xsm
+rm rm.xsm
+load --exec $HOME/myexpos/Stage_25/rm.xsm
 rm assg1.xsm
 load --exec $HOME/myexpos/Stage_25/assg1.xsm
 rm assg2.xsm
